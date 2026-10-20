@@ -5,7 +5,8 @@ import { RoomEntity } from '../rooms/entities/room.entity';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { ReservationEntity } from './entities/reservation.entity';
 import { ReservationRulesService } from './reservation-rules.service';
-import 
+import { ReservationStatus } from './entities/reservation.entity';
+
 
 @Injectable()
 export class ReservationsService {
@@ -20,7 +21,7 @@ export class ReservationsService {
   async cancel(id: number): Promise<ReservationEntity> {
     const reservation = await this.findOne(id) // no existe 404
     this.reservationRulesService.ensureCanCancel(reservation); // antes de modificar 409
-    reservation.status = reservationStatus.CANCELLED;
+    reservation.status = 'cancelled';
     return this.reservationsRepository.save(reservation); // se guarda y se devolveria
     
   }
